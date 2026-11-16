@@ -42,3 +42,6 @@ Desktop.ini
 !.vscode/extensions.json
 !.vscode/settings.json
 .idea/
+
+# My personal study board
+study-index.html
