@@ -234,3 +234,56 @@ Architectural improvements should be treated as deliberate engineering decisions
 - **Explicit uncertainty:** Record assumptions and unresolved questions rather than presenting guesses as facts.
 - **Progressive automation:** Introduce agents, skills, hooks, and pipelines when they solve an identified problem.
 - **Continuous learning:** Evaluate not only the software produced but also the effectiveness of the engineering process.
+
+---
+
+## Worked example: EPIC-01 Story — Confirm technology stack
+
+This example records how GitHub issue [#9 — Confirm technology stack](https://github.com/l3ernardo/agenic-blog/issues/9) was taken from investigation through human review and completion. The issue belongs to [EPIC-01 — Project Foundation](https://github.com/l3ernardo/agenic-blog/issues/1).
+
+### Objective and boundaries
+
+The story's objective was to document the **existing blog application's** technology baseline so it can guide the initial rebuild. It was not a decision about AI-agent tools or the technology used to build agentic workflows.
+
+The issue bounded the work to read-only inspection of the legacy manifests, lockfiles, Dockerfiles, entry points, and Kubernetes configuration. It required evidence-backed findings, explicit unknowns, no dependency or runtime changes, and human review before completion.
+
+### Steps and artifacts
+
+1. **Select and understand the tracked story.** Read the issue scope and acceptance criteria, its parent Epic, project instructions, and relevant discovery and architecture documentation.
+2. **Inspect evidence without changing the legacy application.** Compare package manifests, lockfiles, Dockerfiles, source entry points, and deployment manifests. Keep declared dependency ranges distinct from lockfile resolutions; mark runtime or package-manager versions unknown where the evidence did not establish them.
+3. **Record detailed findings.** [issue-9-investigation-results.md](./discovery/issue-9-investigation-results.md) captures the evidence inspected, findings, discrepancies, and limitations.
+4. **Create the usable baseline record.** [technology-stack.md](./discovery/technology-stack.md) organizes the verified stack information for later project setup and links to the investigation report.
+5. **Clarify scope with the human.** The review conversation distinguished the application's technology stack from agentic-development tooling.
+6. **Review and close the issue.** The human moved the issue through review to Done and checked its acceptance criteria. GitHub now records it as closed/completed with status Done.
+
+### Validation and outcome
+
+This was a discovery and documentation story, so validation was static: findings were checked against the inspected source and configuration. No application build, runtime, dependency installation, or Kubernetes deployment was needed or performed. No legacy application files or dependencies were changed.
+
+The story is complete as a **documented legacy baseline**. It does not choose currently unknown Node.js/npm versions or approve future implementation details beyond confirming that the documented evidence is suitable to guide project setup.
+
+### Guardrail learned
+
+Use a **backlog completion consistency check** before and after marking a story Done:
+
+- Confirm each acceptance criterion is satisfied and checked, or explain an exception.
+- Record the changed artifact(s), evidence, checks performed, and known limitations.
+- Confirm the issue's workflow status and open/closed state match the completion outcome.
+- Recheck the issue after the status update.
+
+During this story, a status review found that the issue was Done while its acceptance checkboxes were still unchecked. The human corrected them, and a follow-up check confirmed consistency. This is a useful **human process guardrail**, not a technical enforcement mechanism. A short review comment recording the approval would make the rationale easier to audit later.
+
+### What this example does not complete
+
+This story demonstrates issue-based, bounded AI-assisted discovery and human review; it does not mean the overall agentic SDLC is complete. Product and requirements approval, the remaining foundation work, application implementation, automated testing, and deployment are separate future work. Specialized agents, CI, and technical enforcement were not required for this documentation story.
+
+## Follow-up example: EPIC-01 Story — Establish application project structure
+
+The next story, [#10 — Establish application project structure](https://github.com/l3ernardo/agenic-blog/issues/10), required a human-approved directory proposal before creating any structure.
+
+- GitHub was marked Done before the application structure existed. The issue's checked acceptance boxes did not match the local worktree, which still had no application directories. The human clarified that only the issue status had been updated.
+- The directory proposal was then presented for review. The human explicitly approved the root-level `client/`, `posts/`, `comments/`, `event-bus/`, `moderation/`, and `query/` structure and authorized minimal scaffolding.
+- The approved directories, source placeholders, and minimal per-app `package.json` files were created. No dependencies, scripts, runtime versions, business logic, or service integrations were added.
+- The approved structure and rationale were recorded in [project-structure.md](./implementation/project-structure.md). The six manifests were parsed as JSON and the expected source/public directories were checked.
+
+**Learning:** A GitHub status and checked boxes are workflow metadata, not proof by themselves. Inspect the artifact and validation evidence before accepting completion. Since the GitHub integration used here is read-only, the human must add the completion evidence and document link to issue #10.
